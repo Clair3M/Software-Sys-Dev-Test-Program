@@ -3,7 +3,12 @@ This is a program built to test a billiards project from the course <i>Software 
 
 <h2>Contributors:</h2>
 <ul>
-    <li><a href="https://github.com/Clair3M" style="text-decoration: none;">Claire Mather</a></li>
+    <li>
+        <a href="https://github.com/Clair3M" style="text-decoration: none;">Claire Mather</a>
+        <ul>
+            <li>wrote main</li>
+        </ul>
+    </li>
 </ul>
 
 <h2>Frameworks & Libraries:</h2>
