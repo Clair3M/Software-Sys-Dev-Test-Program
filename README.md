@@ -4,7 +4,7 @@ This is a program built to test a billiards project from the course <i>Software 
 <h2>Contributors:</h2>
 <ul>
     <li>
-        <a href="https://github.com/Clair3M" style="text-decoration: none;">Claire Mather</a>
+        <a href="https://github.com/Clair3M" >Claire Mather</a>
         <ul>
             <li>wrote main</li>
         </ul>
@@ -13,9 +13,8 @@ This is a program built to test a billiards project from the course <i>Software 
 
 <h2>Frameworks & Libraries:</h2>
 <ul>
-    <li>PyUnit: Unit testing framework</li>
-    <li>ctypes: Library for importing c functions into Python</li>
+    <li>Google Test: testing framework</li>
 </ul>
 
 <h2>Documentation:</h2>
-<a href="https://docs.google.com/spreadsheets/d/15O-gPL1UNBE3bguOtaOZPWfk6YrOXoaCY6CkM7rRQIY/edit?usp=sharing" style="text-decoration: none;">Test Case Documentation</a>
+<a href="https://docs.google.com/spreadsheets/d/15O-gPL1UNBE3bguOtaOZPWfk6YrOXoaCY6CkM7rRQIY/edit?usp=sharing">Test Case Documentation</a>
