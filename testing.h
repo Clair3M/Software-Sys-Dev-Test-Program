@@ -1,6 +1,7 @@
 #ifndef _TESTING_H
 #define _TESTING_H
-#include "../phylib.h"
+#include "../A1/phylib.h"
+#include <stdbool.h>
 
     void pass();
     void fail();
@@ -10,5 +11,12 @@
     void copy_object_test_null();
     void copy_object_existing_object();
     void copy_object_dest_null();
+
+    void copy_table_test_null_table();
+    void copy_table_test_time();
+    void copy_table_test_no_object();
+    void copy_table_test_base_objects();
+    void copy_table_test_table_full();
+    void copy_table_test_different_mem();
 
 #endif
