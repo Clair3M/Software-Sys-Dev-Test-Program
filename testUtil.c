@@ -38,7 +38,7 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
         case PHYLIB_STILL_BALL:
         {
             if (obj2->type != PHYLIB_STILL_BALL) {
-                printf("Objects are not the same type\n");
+                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
@@ -55,7 +55,7 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
         case PHYLIB_ROLLING_BALL:
         {
             if (obj2->type != PHYLIB_ROLLING_BALL) {
-                printf("Objects are not the same type\n");
+                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
@@ -76,7 +76,7 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
         case PHYLIB_HOLE:
         {
             if (obj2->type != PHYLIB_HOLE) {
-                printf("Objects are not the same type\n");
+                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
@@ -92,7 +92,7 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
         case PHYLIB_HCUSHION:
         {
             if (obj2->type != PHYLIB_HCUSHION) {
-                printf("Objects are not the same type\n");
+                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
@@ -100,14 +100,14 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
             ) {
                 return true;
             } else {
-                printf("Objects are not equal\n");
+                printf("Objects are not equal | %f vs %f\n", obj1->obj.hcushion.y, obj2->obj.hcushion.y);
                 return false;
             }
         }
         case PHYLIB_VCUSHION:
         {
             if (obj2->type != PHYLIB_VCUSHION) {
-                printf("Objects are not the same type\n");
+                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
@@ -115,13 +115,13 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
             ) {
                 return true;
             } else {
-                 printf("Objects are not equal\n");
+                 printf("Objects are not equal | %f vs %f\n", obj1->obj.vcushion.x, obj2->obj.vcushion.x);
                 return false;
             }
         }
         default: 
         {
-            printf("Object 1 is an invalid type\n");
+            printf("Object 1 is an invalid type | %d\n", obj1->type);
             return false;
         }
     }
