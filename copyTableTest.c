@@ -1,30 +1,27 @@
 #include "testing.h"
 
-void copy_table_test_null_table() {
-    printf("null_table: ");
+void copy_table_test_null_table(void) {
     phylib_table *table = NULL;
     phylib_table *copy = phylib_copy_table(table);
     if (!copy) {
-        pass();
+        pass("NULL_table");
     } else {
-        fail();
+        fail("NULL_table");
     }
 }
 
-void copy_table_test_time() {
-    printf("time: ");
+void copy_table_test_time(void) {
     phylib_table *table = phylib_new_table();
     table->time = 2341.64;
     phylib_table *copy = phylib_copy_table(table);
     if (copy->time == table->time) {
-        pass();
+        pass("time");
     } else {
-        fail();
+        fail("time");
     }
 }
 
-void copy_table_test_no_object() {
-    printf("no_object: ");
+void copy_table_test_no_object(void) {
     bool passed = true;
     phylib_table *table = phylib_new_table();
     table->time = 21342;
@@ -41,29 +38,27 @@ void copy_table_test_no_object() {
         }
     }
     if (passed) {
-        pass();
+        pass("no_object");
     } else {
-        fail();
+        fail("no_object");
     }
     free(table);
     free(copy);
 }
 
-void copy_table_test_base_objects() {
-    printf("base_objects: ");
+void copy_table_test_base_objects(void) {
     phylib_table *table = phylib_new_table();
     phylib_table *copy = phylib_copy_table(table);
     if (assert_tables_equal(table, copy)) {
-        pass();
+        pass("base_objects");
     } else {
-        fail();
+        fail("base_objects");
     }
     phylib_free_table(table);
     phylib_free_table(copy);
 }
 
-void copy_table_test_table_full() {
-    printf("table_full: ");
+void copy_table_test_table_full(void) {
     phylib_table *table = phylib_new_table();
     
     //1
@@ -136,17 +131,18 @@ void copy_table_test_table_full() {
     phylib_table *copy = phylib_copy_table(table);
 
     if (assert_tables_equal(table, copy)) {
-        pass();
+        pass("full_table");
     } else {
-        fail();
+        print_table(table);
+        print_table(copy);
+        fail("full_table");
     }
 
     phylib_free_table(table);
     //phylib_free_table(copy);
 }
 
-void copy_table_test_different_mem() {
-    printf("different_mem: ");
+void copy_table_test_different_mem(void) {
     bool passed = true;
     phylib_table *table = phylib_new_table();
     phylib_table *copy = phylib_copy_table(table);
@@ -163,9 +159,9 @@ void copy_table_test_different_mem() {
         }
     }
     if (passed) {
-        pass();
+        pass("different_mem");
     } else {
-        fail();
+        fail("different_mem");
     }
     phylib_free_table(table);
     phylib_free_table(copy);

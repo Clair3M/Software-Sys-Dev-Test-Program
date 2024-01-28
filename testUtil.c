@@ -1,11 +1,13 @@
 #include "testing.h"
 
-void pass() {
+void pass(char *name) {
+    printf("%-22s", name);
     printf("\033[0;32m");
     printf("Pass\n");
     printf("\033[0m"); 
 }
-void fail() {
+void fail(char *name) {
+    printf("%-22s", name);
     printf("\033[0;31m");
     printf("Fail\n");
     printf("\033[0m"); 
@@ -126,4 +128,67 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
         }
     }
     return false;
+}
+
+void print_object( phylib_object *object )
+{
+  if (object == NULL)
+  {
+    printf( "NULL;\n" );
+    return;
+  }
+
+  switch (object->type)
+  {
+    case PHYLIB_STILL_BALL:
+      printf( "STILL_BALL (%d,%6.1lf,%6.1lf)\n",
+	      object->obj.still_ball.number,
+	      object->obj.still_ball.pos.x,
+	      object->obj.still_ball.pos.y );
+      break;
+
+    case PHYLIB_ROLLING_BALL:
+      printf( "ROLLING_BALL (%d,%6.1lf,%6.1lf,%6.1lf,%6.1lf,%6.1lf,%6.1lf)\n",
+              object->obj.rolling_ball.number,
+              object->obj.rolling_ball.pos.x,
+              object->obj.rolling_ball.pos.y,
+              object->obj.rolling_ball.vel.x,
+              object->obj.rolling_ball.vel.y,
+              object->obj.rolling_ball.acc.x,
+              object->obj.rolling_ball.acc.y );
+      break;
+
+    case PHYLIB_HOLE:
+      printf( "HOLE (%6.1lf,%6.1lf)\n",
+	      object->obj.hole.pos.x,
+	      object->obj.hole.pos.y );
+      break;
+
+    case PHYLIB_HCUSHION:
+      printf( "HCUSHION (%6.1lf)\n",
+	      object->obj.hcushion.y );
+      break;
+
+    case PHYLIB_VCUSHION:
+      printf( "VCUSHION (%6.1lf)\n",
+	      object->obj.vcushion.x );
+      break;
+  }
+}
+
+void print_table( phylib_table *table )
+{
+  if (!table)
+  {
+    printf( "NULL\n" );
+    return ;
+  }
+
+  printf( "time = %6.1lf;\n", table->time );
+  for ( int i=0; i<PHYLIB_MAX_OBJECTS; i++ )
+  {
+    printf( "  [%02d] = ", i );
+    print_object( table->object[i] );
+  }
+
 }
