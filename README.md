@@ -1,5 +1,5 @@
 # Software Systems Test Program
-This is a testing program built for the course at University of Guelph Software Systems Development and Integration (CIS*2750). The tests are all build using C.
+This is a testing program built for the course at University of Guelph Software Systems Development and Integration (CIS*2750). The tests are all written using C.
 
 ## Coverage
 The current test coverage is quite low. Only a few functions have test cases and those functions are not thoroughly tested.
