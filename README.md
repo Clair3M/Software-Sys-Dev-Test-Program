@@ -18,4 +18,4 @@ phylib_test: phylib.c $(TESTSRC)
 * To run the tests simple type the command "make phylib_test" into your command line
 
 ## Contributors
-* <a href="github.com/Clair3M">Claire Mather</a>
+* <a href="https://github.com/Clair3M">Claire Mather</a>
