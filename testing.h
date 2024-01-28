@@ -10,27 +10,27 @@
     void print_table( phylib_table *table );
     void print_object( phylib_object *object );
 
-    void copy_object_test_null(void);
-    void copy_object_existing_object(void);
-    void copy_object_dest_null(void);
-    void copy_object_test_outer_null(void);
+    bool copy_object_test_null(void);
+    bool copy_object_existing_object(void);
+    bool copy_object_dest_null(void);
+    bool copy_object_test_outer_null(void);
 
-    void copy_table_test_null_table(void);
-    void copy_table_test_time(void);
-    void copy_table_test_no_object(void);
-    void copy_table_test_base_objects(void);
-    void copy_table_test_table_full(void);
-    void copy_table_test_different_mem(void);
+    bool copy_table_test_null_table(void);
+    bool copy_table_test_time(void);
+    bool copy_table_test_no_object(void);
+    bool copy_table_test_base_objects(void);
+    bool copy_table_test_table_full(void);
+    bool copy_table_test_different_mem(void);
 
-    void distance_obj1_null(void);
-    void distance_obj2_null(void);
-    void distance_obj1_invalid_type(void);
-    void distance_obj2_invalid_type(void);
-    void distance_still_ball_normal(void);
-    void distance_still_ball_same(void);
-    void distance_rolling_ball(void);
-    void distance_hole(void);
-    void distance_hcushion(void);
-    void distance_vcushion(void);
+    bool distance_obj1_null(void);
+    bool distance_obj2_null(void);
+    bool distance_obj1_invalid_type(void);
+    bool distance_obj2_invalid_type(void);
+    bool distance_still_ball_normal(void);
+    bool distance_still_ball_same(void);
+    bool distance_rolling_ball(void);
+    bool distance_hole(void);
+    bool distance_hcushion(void);
+    bool distance_vcushion(void);
 
 #endif

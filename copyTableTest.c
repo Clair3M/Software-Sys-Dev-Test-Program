@@ -1,28 +1,37 @@
 #include "testing.h"
 
-void copy_table_test_null_table(void) {
+bool copy_table_test_null_table(void) {
+    bool testPass = false;
     phylib_table *table = NULL;
     phylib_table *copy = phylib_copy_table(table);
     if (!copy) {
         pass("NULL_table");
+        testPass = true;
     } else {
         fail("NULL_table");
+        testPass = false;
     }
+    return testPass;
 }
 
-void copy_table_test_time(void) {
+bool copy_table_test_time(void) {
+    bool testPass = false;
     phylib_table *table = phylib_new_table();
     table->time = 2341.64;
     phylib_table *copy = phylib_copy_table(table);
     if (copy->time == table->time) {
         pass("time");
+        testPass = true;
     } else {
         fail("time");
+        testPass = false;
     }
+    return testPass;
 }
 
-void copy_table_test_no_object(void) {
-    bool passed = true;
+bool copy_table_test_no_object(void) {
+    
+    bool testPass = true;
     phylib_table *table = phylib_new_table();
     table->time = 21342;
     for (int i = 0; i < PHYLIB_MAX_OBJECTS; i++) {
@@ -34,33 +43,38 @@ void copy_table_test_no_object(void) {
     phylib_table *copy = phylib_copy_table(table);
     for (int i = 0; i < PHYLIB_MAX_OBJECTS; i++) {
         if (!assert_objects_equal(table->object[i], copy->object[i])) {
-            passed = false;
+            testPass = false;
         }
     }
-    if (passed) {
+    if (testPass) {
         pass("no_object");
     } else {
         fail("no_object");
     }
     free(table);
     free(copy);
+    return testPass;
 }
 
-void copy_table_test_base_objects(void) {
+bool copy_table_test_base_objects(void) {
+    bool testPass = false;
     phylib_table *table = phylib_new_table();
     phylib_table *copy = phylib_copy_table(table);
     if (assert_tables_equal(table, copy)) {
         pass("base_objects");
+        testPass = true;
     } else {
         fail("base_objects");
+        testPass = false;
     }
     phylib_free_table(table);
     phylib_free_table(copy);
+    return testPass;
 }
 
-void copy_table_test_table_full(void) {
+bool copy_table_test_table_full(void) {
+    bool testPass = false;
     phylib_table *table = phylib_new_table();
-    
     //1
     phylib_coord pos = phylib_new_coord(21.1, 452.9);
     phylib_coord vel = phylib_new_coord(624.1, 112);
@@ -132,37 +146,40 @@ void copy_table_test_table_full(void) {
 
     if (assert_tables_equal(table, copy)) {
         pass("full_table");
+        testPass = true;
     } else {
         print_table(table);
         print_table(copy);
         fail("full_table");
+        testPass = false;
     }
 
     phylib_free_table(table);
-    //phylib_free_table(copy);
+    return testPass;
 }
 
-void copy_table_test_different_mem(void) {
-    bool passed = true;
+bool copy_table_test_different_mem(void) {
+    bool testPass = true;
     phylib_table *table = phylib_new_table();
     phylib_table *copy = phylib_copy_table(table);
 
     if (table == copy) {
-        passed = false;
+        testPass = false;
     }
     for (int i = 0; i < PHYLIB_MAX_OBJECTS; i++) {
         if (table->object[i] == NULL) {
             continue;
         }
         if (table->object[i] == copy->object[i]) {
-            passed = false;
+            testPass = false;
         }
     }
-    if (passed) {
+    if (testPass) {
         pass("different_mem");
     } else {
         fail("different_mem");
     }
     phylib_free_table(table);
     phylib_free_table(copy);
+    return testPass;
 }
