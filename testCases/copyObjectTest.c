@@ -7,10 +7,10 @@ bool copy_object_test_null(void) {
     phylib_object *src = NULL;
     phylib_copy_object(&dest, &src);
     if (!(dest)) {
-        pass("NULL");
+        pass("NULL_src");
         testPass = true;
     } else {
-        fail("NULL");
+        fail("NULL_src");
         testPass = false;
     }
     fflush(stdout);

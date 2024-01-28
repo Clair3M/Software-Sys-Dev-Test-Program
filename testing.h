@@ -35,4 +35,9 @@
     bool distance_hcushion(void);
     bool distance_vcushion(void);
 
+    bool rolling_null_table(void);
+    bool rolling_all_null(void);
+    bool rolling_all_rolling(void);
+    bool rolling_mixed(void);
+
 #endif

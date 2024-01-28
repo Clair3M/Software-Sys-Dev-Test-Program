@@ -39,8 +39,8 @@ bool assert_tables_equal(phylib_table *expected, phylib_table *result) {
 }
 
 bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
-    if (!obj1) {
-        if (!obj2) {
+    if (!obj1 || !obj2) {
+        if ((!obj1) == (!obj2)) {
             return true;
         }
         return false;

@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
         printf("*");
     printf("\n\n");
 
-    bool (*testCase[20])(void) = {
+    bool (*testCase[24])(void) = {
                                    copy_object_test_null,
                                    copy_object_dest_null,
                                    copy_object_existing_object,
@@ -28,15 +28,19 @@ int main(int argc, char** argv) {
                                    distance_rolling_ball,
                                    distance_hole,
                                    distance_hcushion,
-                                   distance_vcushion
+                                   distance_vcushion,
+                                   rolling_null_table,
+                                   rolling_all_null,
+                                   rolling_all_rolling,
+                                   rolling_mixed
                                  };
 
     int num_passes = 0;
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 24; i++) {
         if (testCase[i]()) {
             num_passes++;
         }
     }
     printf("\n");
-    printf("Tests passed: %d/20\n", num_passes);
+    printf("Tests passed: %d/24\n", num_passes);
 }
