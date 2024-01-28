@@ -1,71 +1,36 @@
-#include "phylib.h"
+#include "../testing.h"
 
-void phylib_print_object( phylib_object *object )
-{
-  if (object == NULL)
-  {
-    printf( "NULL;\n" );
-    return;
-  }
+void createTables(phylib_table *table_one, phylib_table *table_two, phylib_table *table_three, phylib_table *table_four) {
+  table_one = phylib_new_table();
+  table_two = phylib_new_table();
+  table_three = phylib_new_table();
+  table_four = NULL;
 
-  switch (object->type)
-  {
-    case PHYLIB_STILL_BALL:
-      printf( "STILL_BALL (%d,%6.1lf,%6.1lf)\n",
-	      object->obj.still_ball.number,
-	      object->obj.still_ball.pos.x,
-	      object->obj.still_ball.pos.y );
-      break;
+  table_one->time = 1.6;
+  table_two->time = 4.0;
+  table_one->time = 4.5;
 
-    case PHYLIB_ROLLING_BALL:
-      printf( "ROLLING_BALL (%d,%6.1lf,%6.1lf,%6.1lf,%6.1lf,%6.1lf,%6.1lf)\n",
-              object->obj.rolling_ball.number,
-              object->obj.rolling_ball.pos.x,
-              object->obj.rolling_ball.pos.y,
-              object->obj.rolling_ball.vel.x,
-              object->obj.rolling_ball.vel.y,
-              object->obj.rolling_ball.acc.x,
-              object->obj.rolling_ball.acc.y );
-      break;
+  phylib_coord pos = phylib_new_coord(634.7, 634.7);
+  phylib_coord vel = phylib_new_coord(-358.5, -358.3);
+  phylib_coord acc = phylib_new_coord(106.1, 106.0);
+  phylib_object *rolling_ball = phylib_new_rolling_ball(1, &pos, &vel, &acc);
+  table_one->object[10] = rolling_ball;
+  
+  pos = phylib_new_coord(675.0, 675.0);
+  vel = phylib_new_coord(358.5, -358.7);
+  vel = phylib_new_coord(-106.0, -106.1);
+  rolling_ball = phylib_new_rolling_ball(0, &pos, &vel, &acc);
+  table_one->object[11] = rolling_ball;
 
-    case PHYLIB_HOLE:
-      printf( "HOLE (%6.1lf,%6.1lf)\n",
-	      object->obj.hole.pos.x,
-	      object->obj.hole.pos.y );
-      break;
-
-    case PHYLIB_HCUSHION:
-      printf( "HCUSHION (%6.1lf)\n",
-	      object->obj.hcushion.y );
-      break;
-
-    case PHYLIB_VCUSHION:
-      printf( "VCUSHION (%6.1lf)\n",
-	      object->obj.vcushion.x );
-      break;
-  }
+  pos = phylib_new_coord(1229.4, 120.2);
+  vel = phylib_new_coord(104.5, -104.6);
+  vel = phylib_new_coord(-106.0, -106.1);
+  rolling_ball = phylib_new_rolling_ball(0, &pos, &vel, &acc);
+  table_two->object[11] = rolling_ball;
 }
 
-void phylib_print_table( phylib_table *table )
-{
-  if (!table)
-  {
-    printf( "NULL\n" );
-    return ;
-  }
-
-  printf( "time = %6.1lf;\n", table->time );
-  for ( int i=0; i<PHYLIB_MAX_OBJECTS; i++ )
-  {
-    printf( "  [%02d] = ", i );
-    phylib_print_object( table->object[i] );
-  }
-
-}
-
-
-int main( int argc, char **argv )
-{
+// test case adapted from A1Test written by Stefan C. Kremer
+bool providedTest(void) {
   phylib_coord pos, vel, acc;
   phylib_table *table;
   phylib_object *sb;
@@ -94,19 +59,40 @@ int main( int argc, char **argv )
   phylib_add_object( table, sb );
   phylib_add_object( table, rb );
 
-  phylib_print_table( table );
+  phylib_table *table_one = NULL
+             , *table_two = NULL
+             , *table_three = NULL
+             , *table_four = NULL;
+  createTables(table_one, table_two, table_three, table_four);
 
-  //printf("new table at: %p\n", (void*) table);
-  do
-  {
-    phylib_table *new = phylib_segment( table );
-    //printf("new table at: %p\n", (void*) new);
+  bool testPass = true;
 
-    //printf("new table at: %p freed\n", (void*) table);
-    phylib_free_table( table );
-    
-    table = new;
+  phylib_table *result_one = phylib_segment(table);
+  if (!assert_tables_equal(table_one, result_one)) {
+    testPass = false;
+  }
+  phylib_free_table(table);
 
-    phylib_print_table( table );
-  } while( table );
+  phylib_table *result_two = phylib_segment(result_one);
+  if (!assert_tables_equal(table_two, result_two)) {
+    testPass = false;
+  }
+  phylib_free_table(result_one);
+
+  phylib_table *result_three = phylib_segment(result_two);
+  if (!assert_tables_equal(table_three, result_three)) {
+    testPass = false;
+  }
+  phylib_free_table(result_two);
+  
+  phylib_table *result_four = phylib_segment(result_three);
+  if (!assert_tables_equal(table_four, result_four)) {
+    testPass = false;
+  }
+  if (testPass) {
+    pass("provided");
+  } else {
+    fail("provided");
+  }
+  return testPass;
 }

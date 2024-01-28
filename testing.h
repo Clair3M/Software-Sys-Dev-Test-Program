@@ -6,9 +6,11 @@
     void pass(char *);
     void fail(char *);
     bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2);
-    bool assert_tables_equal(phylib_table *table1, phylib_table *table2);
+    bool assert_tables_equal(phylib_table *expected, phylib_table *result);
     void print_table( phylib_table *table );
     void print_object( phylib_object *object );
+
+    bool providedTest(void);
 
     bool copy_object_test_null(void);
     bool copy_object_existing_object(void);

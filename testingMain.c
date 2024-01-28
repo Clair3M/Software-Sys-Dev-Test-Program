@@ -8,7 +8,8 @@ int main(int argc, char** argv) {
         printf("*");
     printf("\n\n");
 
-    bool (*testCase[20])(void) = { copy_object_test_null,
+    bool (*testCase[20])(void) = {
+                                   copy_object_test_null,
                                    copy_object_dest_null,
                                    copy_object_existing_object,
                                    copy_object_test_outer_null,

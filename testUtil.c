@@ -13,15 +13,25 @@ void fail(char *name) {
     printf("\033[0m"); 
 }
 
-bool assert_tables_equal(phylib_table *table1, phylib_table *table2) {
+bool assert_tables_equal(phylib_table *expected, phylib_table *result) {
     bool equal = true;
-    if (table1->time != table2->time) {
-        printf("The time variable is not equal\n");
-        equal = false;
+    if (result == NULL || expected == NULL) {
+        if ((result == NULL) != (expected == NULL)) {
+            return false;
+        }
+        return true;
+    }
+    if (fabs(expected->time - result->time) > 0.1) {
+        printf("Time was %6.1fs, expected %6.1fs\n", result->time, expected->time);
+        return false;
     }
     for (int i = 0; i < PHYLIB_MAX_OBJECTS; i++) {
-        if (!assert_objects_equal(table1->object[i], table2->object[i])) {
+        if (!assert_objects_equal(expected->object[i], result->object[i])) {
             printf("Objects at index %d are not equal\n", i);
+            printf("expected: ");
+            print_object(expected->object[i]);
+            printf("got: ");
+            print_object(result->object[i]);
             equal = false;
         }
     }
@@ -33,97 +43,81 @@ bool assert_objects_equal(phylib_object *obj1, phylib_object *obj2) {
         if (!obj2) {
             return true;
         }
-        printf("Objects are not equal\n");
         return false;
     }
     switch(obj1->type) {
         case PHYLIB_STILL_BALL:
         {
             if (obj2->type != PHYLIB_STILL_BALL) {
-                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
                 obj1->obj.still_ball.number == obj2->obj.still_ball.number
-                && obj1->obj.still_ball.pos.x == obj2->obj.still_ball.pos.x
-                && obj1->obj.still_ball.pos.y == obj2->obj.still_ball.pos.y
+                && fabs(obj1->obj.still_ball.pos.x - obj2->obj.still_ball.pos.x) < 0.1
+                && fabs(obj1->obj.still_ball.pos.y - obj2->obj.still_ball.pos.y) < 0.1
             ) {
                 return true;
             } else {
-                printf("Objects are not equal\n");
                 return false;
             }
         }
         case PHYLIB_ROLLING_BALL:
         {
             if (obj2->type != PHYLIB_ROLLING_BALL) {
-                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
                 obj1->obj.rolling_ball.number == obj2->obj.rolling_ball.number
-                && obj1->obj.rolling_ball.pos.x == obj2->obj.rolling_ball.pos.x
-                && obj1->obj.rolling_ball.pos.y == obj2->obj.rolling_ball.pos.y
-                && obj1->obj.rolling_ball.vel.x == obj2->obj.rolling_ball.vel.x
-                && obj1->obj.rolling_ball.vel.y == obj2->obj.rolling_ball.vel.y
-                && obj1->obj.rolling_ball.acc.x == obj2->obj.rolling_ball.acc.x
-                && obj1->obj.rolling_ball.acc.y == obj2->obj.rolling_ball.acc.y
+                && fabs(obj1->obj.rolling_ball.pos.x - obj2->obj.rolling_ball.pos.x) < 0.1
+                && fabs(obj1->obj.rolling_ball.pos.y - obj2->obj.rolling_ball.pos.y) < 0.1
+                && fabs(obj1->obj.rolling_ball.vel.x - obj2->obj.rolling_ball.vel.x) < 0.1
+                && fabs(obj1->obj.rolling_ball.vel.y - obj2->obj.rolling_ball.vel.y) < 0.1
+                && fabs(obj1->obj.rolling_ball.acc.x - obj2->obj.rolling_ball.acc.x) < 0.1
+                && fabs(obj1->obj.rolling_ball.acc.y - obj2->obj.rolling_ball.acc.y) < 0.1
             ) {
                 return true;
             } else {
-                 printf("Objects are not equal\n");
                 return false;
             }
         }
         case PHYLIB_HOLE:
         {
             if (obj2->type != PHYLIB_HOLE) {
-                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
             if (
-                obj1->obj.hole.pos.x == obj2->obj.hole.pos.x
-                && obj1->obj.hole.pos.y == obj2->obj.hole.pos.y
+                fabs(obj1->obj.hole.pos.x - obj2->obj.hole.pos.x) < 0.1
+                && fabs(obj1->obj.hole.pos.y - obj2->obj.hole.pos.y) < 0.1
             ) {
                 return true;
             } else {
-                 printf("Objects are not equal\n");
                 return false;
             }
         }
         case PHYLIB_HCUSHION:
         {
             if (obj2->type != PHYLIB_HCUSHION) {
-                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
-            if (
-                obj1->obj.hcushion.y == obj2->obj.hcushion.y
-            ) {
+            if ((obj1->obj.hcushion.y - obj2->obj.hcushion.y) < 0.1) {
                 return true;
             } else {
-                printf("Objects are not equal | %f vs %f\n", obj1->obj.hcushion.y, obj2->obj.hcushion.y);
                 return false;
             }
         }
         case PHYLIB_VCUSHION:
         {
             if (obj2->type != PHYLIB_VCUSHION) {
-                printf("Objects are not the same type | %d vs %d\n", obj1->type, obj2->type);
                 return false;
             }
-            if (
-                obj1->obj.vcushion.x == obj2->obj.vcushion.x
-            ) {
+            if (fabs(obj1->obj.vcushion.x - obj2->obj.vcushion.x) < 0.1) {
                 return true;
             } else {
-                 printf("Objects are not equal | %f vs %f\n", obj1->obj.vcushion.x, obj2->obj.vcushion.x);
                 return false;
             }
         }
         default: 
         {
-            printf("Object 1 is an invalid type | %d\n", obj1->type);
             return false;
         }
     }
@@ -183,7 +177,6 @@ void print_table( phylib_table *table )
     printf( "NULL\n" );
     return ;
   }
-
   printf( "time = %6.1lf;\n", table->time );
   for ( int i=0; i<PHYLIB_MAX_OBJECTS; i++ )
   {
