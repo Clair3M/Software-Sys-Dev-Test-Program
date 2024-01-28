@@ -15,7 +15,7 @@ phylib_test: phylib.c $(TESTSRC)
 	$(CC) $(CFLAGS) -lm $^ -o $@
 	./phylib_test
 ```
-* To run the tests simple type the command "make phylib_test" into your command line
+* To run the tests type the command "make phylib_test" into your command line
 
 ## Contributors
 * <a href="https://github.com/Clair3M">Claire Mather</a>
