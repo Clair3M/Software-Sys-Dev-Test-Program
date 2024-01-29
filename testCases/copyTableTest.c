@@ -26,6 +26,8 @@ bool copy_table_test_time(void) {
         fail("time");
         testPass = false;
     }
+    phylib_free_table(table);
+    phylib_free_table(copy);
     return testPass;
 }
 
@@ -155,6 +157,7 @@ bool copy_table_test_table_full(void) {
     }
 
     phylib_free_table(table);
+    phylib_free_table(copy);
     return testPass;
 }
 

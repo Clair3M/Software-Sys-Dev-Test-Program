@@ -47,9 +47,15 @@ bool rolling_all_rolling(void) {
     phylib_coord acc = phylib_new_coord(9241.2, 2682.1);
     phylib_object *new_ball = phylib_new_rolling_ball(2, &pos, &vel, &acc);
 
+    if (table->object[0]) {
+        free(table->object[0]);
+    }
     table->object[0] = new_ball;
     phylib_object *another_ball;
     for (int i = 1; i < PHYLIB_MAX_OBJECTS; i++) {
+        if (table->object[i]) {
+            free(table->object[i]);
+        }
         phylib_copy_object(&another_ball, &new_ball); 
         table->object[i] = another_ball;
     }

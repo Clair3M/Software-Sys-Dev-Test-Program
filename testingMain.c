@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
         printf("*");
     printf("\n\n");
 
-    bool (*testCase[24])(void) = {
+    bool (*testCase[30])(void) = {
                                    copy_object_test_null,
                                    copy_object_dest_null,
                                    copy_object_existing_object,
@@ -32,15 +32,21 @@ int main(int argc, char** argv) {
                                    rolling_null_table,
                                    rolling_all_null,
                                    rolling_all_rolling,
-                                   rolling_mixed
+                                   rolling_mixed,
+                                   bounce_hcushion_above,
+                                   bounce_hcushion_below,
+                                   bounce_vcushion_left,
+                                   bounce_vcushion_right,
+                                   bounce_hole,
+                                   bounce_still_to_rolling,
                                  };
 
     int num_passes = 0;
-    for (int i = 0; i < 24; i++) {
+    for (int i = 0; i < 30; i++) {
         if (testCase[i]()) {
             num_passes++;
         }
     }
     printf("\n");
-    printf("Tests passed: %d/24\n", num_passes);
+    printf("Tests passed: %d/30\n", num_passes);
 }

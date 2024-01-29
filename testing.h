@@ -40,4 +40,12 @@
     bool rolling_all_rolling(void);
     bool rolling_mixed(void);
 
+    bool bounce_hcushion_above(void);
+    bool bounce_hcushion_below(void);
+    bool bounce_vcushion_left(void);
+    bool bounce_vcushion_right(void);
+    bool bounce_hole(void);
+    bool bounce_still_to_rolling(void);
+
+
 #endif
