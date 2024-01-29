@@ -172,7 +172,90 @@ bool bounce_still_to_rolling(void) {
     return testPass;
 }
 // still ball direct hit
+bool bounce_still_direct_hit(void) {
+    bool testPass = false;
+
+    phylib_coord pos = phylib_new_coord(3.14,12.44);
+    phylib_coord vel = phylib_new_coord(0, 834.09);
+    phylib_coord acc = phylib_new_coord(0, -104.3);
+    phylib_object *rolling_ball = phylib_new_rolling_ball(1, &pos, &vel, &acc);
+
+    pos = phylib_new_coord(3.14, 69.42);
+    phylib_object *ball_two = phylib_new_still_ball(4, &pos);
+
+    pos = phylib_new_coord(3.14,12.44);
+    vel = phylib_new_coord(0, 0);
+    acc = phylib_new_coord(0, 0);
+    phylib_object *expected_ball_one = phylib_new_rolling_ball(1, &pos, &vel, &acc);
+
+    pos = phylib_new_coord(3.14, 69.42);
+    vel = phylib_new_coord(0, 834.09);
+    acc = phylib_new_coord(0, -150.0);
+    phylib_object *expected_ball_two = phylib_new_rolling_ball(4, &pos, &vel, &acc);
+
+    phylib_bounce(&rolling_ball, &ball_two);
+    if (assert_objects_equal(expected_ball_one, rolling_ball)
+     && assert_objects_equal(expected_ball_two, ball_two)
+    ) {
+        testPass = true;
+        pass("still_direct_hit");
+    } else {
+        printf("Expected one: ");
+        print_object(expected_ball_one);
+        printf("got: ");
+        print_object(rolling_ball);
+        printf("Expected one: ");
+        print_object(expected_ball_two);
+        printf("got: ");
+        print_object(ball_two);
+        testPass = false;
+        fail("still_direct_hit");
+    }
+    free(rolling_ball);
+    free(ball_two);
+    free(expected_ball_one);
+    free(expected_ball_two);
+    return testPass;
+}
 // brush side of still ball
+bool bounce_still_brush_hit(void) {
+    bool testPass = false;
+
+    phylib_coord pos = phylib_new_coord(2083.795, 983.795);
+    phylib_coord vel = phylib_new_coord(420.84, 420.84);
+    phylib_coord acc = phylib_new_coord(-104.3, -104.3);
+    phylib_object *rolling_ball = phylib_new_rolling_ball(1, &pos, &vel, &acc);
+
+    pos = phylib_new_coord(2053.52, 1032.09);
+    phylib_object *ball_two = phylib_new_still_ball(4, &pos);
+
+    pos = phylib_new_coord(2083.795, 983.795);
+    vel = phylib_new_coord(491.505682, 308.113356);
+    acc = phylib_new_coord(0, 0);
+    phylib_object *expected_ball_one = phylib_new_rolling_ball(1, &pos, &vel, &acc);
+ 
+    pos = phylib_new_coord(2053.52, 1032.09);
+    vel = phylib_new_coord(-70.6656825, 112.726644);
+    acc = phylib_new_coord(0, 0);
+    phylib_object *expected_ball_two = phylib_new_rolling_ball(4, &pos, &vel, &acc);
+
+    phylib_bounce(&rolling_ball, &ball_two);
+    if (
+        assert_objects_equal(expected_ball_one, rolling_ball)
+     && assert_objects_equal(expected_ball_two, ball_two)
+    ) {
+        testPass = true;
+        pass("still_brush_hit");
+    } else {
+        testPass = false;
+        fail("still_brush_hit");
+    }
+    free(rolling_ball);
+    free(ball_two);
+    free(expected_ball_one);
+    free(expected_ball_two);
+    return testPass;
+}
 // a ball going just slower than epsilon hitting still ball
 // complete oposite rolling ball
 // rolling ball same direction

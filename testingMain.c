@@ -1,6 +1,8 @@
 #include "testing.h"
 
 int main(int argc, char** argv) {
+    int tests = 31;
+
     for (int i = 0; i < 10; i++)
         printf("*");
     printf(" Test ");
@@ -8,7 +10,7 @@ int main(int argc, char** argv) {
         printf("*");
     printf("\n\n");
 
-    bool (*testCase[30])(void) = {
+    bool (*testCase[31])(void) = {
                                    copy_object_test_null,
                                    copy_object_dest_null,
                                    copy_object_existing_object,
@@ -39,14 +41,15 @@ int main(int argc, char** argv) {
                                    bounce_vcushion_right,
                                    bounce_hole,
                                    bounce_still_to_rolling,
+                                   bounce_still_direct_hit
                                  };
 
     int num_passes = 0;
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < tests; i++) {
         if (testCase[i]()) {
             num_passes++;
         }
     }
     printf("\n");
-    printf("Tests passed: %d/30\n", num_passes);
+    printf("Tests passed: %d/%d\n", num_passes, tests);
 }

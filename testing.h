@@ -46,6 +46,7 @@
     bool bounce_vcushion_right(void);
     bool bounce_hole(void);
     bool bounce_still_to_rolling(void);
+    bool bounce_still_direct_hit(void);
 
 
 #endif
